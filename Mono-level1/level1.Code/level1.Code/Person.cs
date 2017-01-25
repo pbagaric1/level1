@@ -8,9 +8,9 @@ namespace level1.Code
 {
     public abstract class Person
     {
-        public int id { set; get; }
-        public string name { get; set; }
-        public string last_name { get; set; }
+        public int ID { set; get; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
     }
 }
 

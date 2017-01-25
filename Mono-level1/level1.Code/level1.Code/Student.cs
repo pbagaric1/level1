@@ -8,6 +8,6 @@ namespace level1.Code
 {
     public class Student : Person
     {
-        public float GPA { get; set; }
+        public string GPA { get; set; }
     }
 }

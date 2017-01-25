@@ -10,57 +10,85 @@ namespace level1.App
     {
         static void Main(string[] args)
         {
+            Validation Val = new Validation();
             string input;
-            Console.WriteLine("Unesite operaciju (ENLIST/DISPLAY)");
-            input = Console.ReadLine();
-            if (String.Compare(Operations.enlist, input, true) == 0)
+            bool flag4, flag5;
+            do
             {
-                function_Enlist();
-            }
-            else if (String.Compare(Operations.display, input, true) == 0)
-            {
-                function_Display();
-            }
-
-            else
-            {
-                Console.WriteLine("Kriva operacija, pokusajte ponovno");
-                input = Console.ReadLine();
-            }
+                flag5 = false;
+                do
+                {
+                    flag4 = false;
+                    Console.WriteLine("Unesite operaciju (ENLIST/DISPLAY)");
+                    input = Console.ReadLine();
+                    Val.check_operation(input);
+                    if(Val.Flag1)
+                    {
+                        Enlist();
+                        flag4 = true;
+                    }
+                    else if (Val.Flag2)
+                    {
+                        Display();
+                        flag4 = true;
+                        flag5 = true;
+                    }
+                } while (!flag4);
+            } while (!flag5);
         }
            
 
-        public static void function_Enlist()
+        public static void Enlist()
         {
-            Student student = new Student();
-            string name, last_name;
-            int id;
-            float GPA;
+            Validation Val = new Validation();
+            StudentIdGenerator STID = StudentIdGenerator.Instance;
+            Student Student = new Student();
+            string name, lastName, gpa;
+            do
+            {
+                Console.WriteLine("Unesite ime");
+                name = Console.ReadLine();
+                Val.check_if_empty(name);       
+            } while (!Val.Flag3);
+            Student.Name = name;
 
-            Console.WriteLine("Unesite ime");
-            name = Console.ReadLine();
-            student.name = name;
+            do
+            {
+                Console.WriteLine("Unesite prezime");
+                lastName = Console.ReadLine();
+                Val.check_if_empty(lastName);
 
-            Console.WriteLine("Unesite prezime");
-            last_name = Console.ReadLine();
-            student.last_name = last_name;
+            } while (!Val.Flag3);
+            Student.LastName = lastName;
 
-            Console.WriteLine("Unesite GPA");
-            GPA = float.Parse(Console.ReadLine());
-            student.GPA = GPA;
+            do
+            {
+                Console.WriteLine("Unesite GPA");
+                gpa = Console.ReadLine();
+                Val.check_gpa(gpa);
 
+            } while (!Val.Flag3);
+            Student.GPA = gpa;
+
+            Student.ID = STID.IncID();
             StudentContainer lista = StudentContainer.Instance;
-            lista.AddToList(student);
+            lista.AddToList(Student);
         }
 
-        public static  void function_Display()
+        public static  void Display()
         {
             StudentContainer lista = StudentContainer.Instance;
             List<Student> stud = lista.GetList();
+            StudentIdGenerator student_id = StudentIdGenerator.Instance;
+
+            stud.Sort(delegate (Student x, Student y)
+            {
+                return x.LastName.CompareTo(y.LastName);
+            });
 
             for (int i = 0; i < stud.Count; i++)
             {
-                Console.WriteLine(stud[i].name + ',' + stud[i].last_name);
+                Console.WriteLine(stud[i].ID  + " " + stud[i].Name + ',' + stud[i].LastName+ ',' + stud[i].GPA);
             }
 
 
