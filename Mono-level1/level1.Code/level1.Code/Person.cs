@@ -8,7 +8,7 @@ namespace level1.Code
 {
     public abstract class Person
     {
-        public int ID { set; get; }
+        public int Id { set; get; }
         public string Name { get; set; }
         public string LastName { get; set; }
     }

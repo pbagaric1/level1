@@ -12,83 +12,72 @@ namespace level1.App
         {
             Validation Val = new Validation();
             string input;
-            bool flag4, flag5;
-            do
-            {
-                flag5 = false;
+            bool CheckDisplay;
+                CheckDisplay = false;
                 do
                 {
-                    flag4 = false;
                     Console.WriteLine("Unesite operaciju (ENLIST/DISPLAY)");
                     input = Console.ReadLine();
-                    Val.check_operation(input);
-                    if(Val.Flag1)
+                    Val.CheckOperation(input);
+                    if(Val.FlagEnlist)
                     {
                         Enlist();
-                        flag4 = true;
                     }
-                    else if (Val.Flag2)
+                    else if (Val.FlagDisplay)
                     {
                         Display();
-                        flag4 = true;
-                        flag5 = true;
+                        CheckDisplay = true;
                     }
-                } while (!flag4);
-            } while (!flag5);
+                } while (!CheckDisplay);
         }
            
 
         public static void Enlist()
         {
             Validation Val = new Validation();
-            StudentIdGenerator STID = StudentIdGenerator.Instance;
+            StudentIdGenerator StID = StudentIdGenerator.Instance;
             Student Student = new Student();
             string name, lastName, gpa;
             do
             {
                 Console.WriteLine("Unesite ime");
                 name = Console.ReadLine();
-                Val.check_if_empty(name);       
-            } while (!Val.Flag3);
+                Val.CheckIfEmpty(name);       
+            } while (Val.WrongInput);
             Student.Name = name;
 
             do
             {
                 Console.WriteLine("Unesite prezime");
                 lastName = Console.ReadLine();
-                Val.check_if_empty(lastName);
+                Val.CheckIfEmpty(lastName);
 
-            } while (!Val.Flag3);
+            } while (Val.WrongInput);
             Student.LastName = lastName;
 
             do
             {
                 Console.WriteLine("Unesite GPA");
                 gpa = Console.ReadLine();
-                Val.check_gpa(gpa);
+                Val.CheckGPA(gpa);
 
-            } while (!Val.Flag3);
-            Student.GPA = gpa;
+            } while (Val.WrongInput);
+            Student.Gpa = gpa;
 
-            Student.ID = STID.IncID();
-            StudentContainer lista = StudentContainer.Instance;
-            lista.AddToList(Student);
+            Student.Id = StID.IncID();
+            StudentContainer Lista = StudentContainer.Instance;
+            Lista.AddToList(Student);
         }
 
         public static  void Display()
         {
-            StudentContainer lista = StudentContainer.Instance;
-            List<Student> stud = lista.GetList();
-            StudentIdGenerator student_id = StudentIdGenerator.Instance;
+            StudentContainer Lista = StudentContainer.Instance;
+            List<Student> Stud = Lista.GetList();
 
-            stud.Sort(delegate (Student x, Student y)
+   
+            for (int i = 0; i < Stud.Count; i++)
             {
-                return x.LastName.CompareTo(y.LastName);
-            });
-
-            for (int i = 0; i < stud.Count; i++)
-            {
-                Console.WriteLine(stud[i].ID  + " " + stud[i].Name + ',' + stud[i].LastName+ ',' + stud[i].GPA);
+                Console.WriteLine(Stud[i].Id  + " " + Stud[i].Name + "," + Stud[i].LastName+ ", " + Stud[i].Gpa);
             }
 
 

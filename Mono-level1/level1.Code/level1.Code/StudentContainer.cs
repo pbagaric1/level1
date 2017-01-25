@@ -8,7 +8,7 @@ namespace level1.Code
 {
     public class StudentContainer
     {
-       List<Student> students = new List<Student>();
+       List<Student> Students = new List<Student>();
 
         private static StudentContainer instance ;
 
@@ -30,13 +30,18 @@ namespace level1.Code
 
         public List<Student> GetList()
         {
-            return students;
+            return Sort(Students);
         }
 
         public void AddToList(Student stud)
 
         {
-            students.Add(stud);
+            Students.Add(stud);
+        }
+
+        public List<Student> Sort(List<Student> stud)
+        {
+            return stud.OrderBy(x => x.LastName).ToList();
         }
     }
    

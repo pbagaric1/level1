@@ -8,7 +8,7 @@ namespace level1.Code
 {
     public static class Operations
     {
-        public static string Enlist = "enlist";
-        public static string Display = "display";
+        public static string ENLIST = "enlist";
+        public static string DISPLAY = "display";
     }
 }
